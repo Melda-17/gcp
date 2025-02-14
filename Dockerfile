@@ -20,7 +20,7 @@ COPY --chown=node:node . .
 RUN npm install
 
 # 7. Expose the application port
-EXPOSE 3000
+EXPOSE 8080
 
 # 8. Default command to start the application
 CMD ["node", "src/index.js"]
