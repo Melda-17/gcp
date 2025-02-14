@@ -1,15 +1,16 @@
 steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/crucial-binder-447418-k1/melda-100962200/gcp:${SHORT_SHA}', 
+    args: ['build', '-t',
+           'us-central1-docker.pkg.dev/crucial-binder-447418-k1/melda-100962200/gcp:${SHORT_SHA}',
            '.']
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 
+    args: ['push',
            'us-central1-docker.pkg.dev/crucial-binder-447418-k1/melda-100962200/gcp:${SHORT_SHA}']
 
+  # Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -20,9 +21,12 @@ steps:
     - 'us-central1-docker.pkg.dev/crucial-binder-447418-k1/melda-100962200/gcp:${SHORT_SHA}'
     - '--region'
     - 'us-central1'
-    
+    - '--platform'
+    - 'managed'
+    - '--allow-unauthenticated'  # Optional: allows public access to the service
+
 images:
   - 'us-central1-docker.pkg.dev/crucial-binder-447418-k1/melda-100962200/gcp:${SHORT_SHA}'
-  
+
 options:
-    defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
