@@ -7,7 +7,7 @@ const updateItem = require('./routes/updateItem');
 const deleteItem = require('./routes/deleteItem');
 
 app.use(express.json());
-app.use(express.static(__dirname + '/static/Assignment - 100962200'));
+app.use(express.static(__dirname + '/static/Assignment 2 - 100962200'));
 
 app.get('/items', getItems);
 app.post('/items', addItem);
